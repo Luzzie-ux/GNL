@@ -1,0 +1,45 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rodrpere <rodrpere@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/13 16:12:45 by rodrpere          #+#    #+#             */
+/*   Updated: 2026/05/13 16:27:33 by rodrpere         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "get_next_line.h"
+#include <fcntl.h>
+#include <stdio.h>
+
+static int	readf(char *argv)
+{
+	int		file;
+	char	*buffer;
+
+	file = open(argv[1], O_RDONLY);
+	if (file == -1)
+		return (printf("Cannot read file"), 0);
+	buffer = get_next_line(file);
+	while (buffer)
+	{
+		printf("%s", buffer);
+		free(buffer);
+		buffer = get_next_line(file);
+	}
+	close (file);
+	return (0);
+}
+
+int	main(int argc, char **argv)
+{
+	if (argc == 1)
+		return(printf("File name is missing.\n"), 0);
+	if (argv > 2)
+		return (printf ("Too many arguments"), 0);
+	else
+		return (readf(argv[1]));
+	return (0);
+}
