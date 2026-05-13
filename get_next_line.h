@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rodrpere <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rodrpere <rodrpere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 12:46:36 by rodrpere          #+#    #+#             */
-/*   Updated: 2026/05/13 12:49:50 by rodrpere         ###   ########.fr       */
+/*   Updated: 2026/05/13 16:43:49 by rodrpere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,9 @@
 //prototipos
 
 char	*get_next_line(int fd);
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 #endif
