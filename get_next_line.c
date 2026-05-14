@@ -6,7 +6,7 @@
 /*   By: rodrpere <rodrpere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 15:19:06 by rodrpere          #+#    #+#             */
-/*   Updated: 2026/05/14 11:52:50 by rodrpere         ###   ########.fr       */
+/*   Updated: 2026/05/14 12:04:23 by rodrpere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ char	*get_next_line(int fd)
 	buffer = (char *)malloc(BUFFER_SIZE + 1 * sizeof(char *));
 	if (!buffer)
 		return (NULL);
-	while (buffer)
+	while (*buffer)
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
-		if (!bytes)
+		if (bytes < 0)
 			return (NULL);
 		else if (bytes == 0)
 			return (buffer);
@@ -40,19 +40,7 @@ char	*get_next_line(int fd)
 	return (NULL);
 }
 
-/* int	findn(char *s)
-{
-	int i;
-
- 	i = 0;
-	if (!s)
-		return (0);
-	while (s[i] != '\n')
-		i++;
-	return (i);
-} */
-
-char	*ft_strdup(const char *s)
+static char	*ft_strdup(const char *s)
 {
 	char	*str;
 	char	*p;
@@ -70,3 +58,15 @@ char	*ft_strdup(const char *s)
 	*p = '\n';
 	return (str);
 }
+
+/* int	findn(char *s)
+{
+	int i;
+
+ 	i = 0;
+	if (!s)
+		return (0);
+	while (s[i] != '\n')
+		i++;
+	return (i);
+} */
