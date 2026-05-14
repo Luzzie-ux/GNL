@@ -6,7 +6,7 @@
 /*   By: rodrpere <rodrpere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 16:12:45 by rodrpere          #+#    #+#             */
-/*   Updated: 2026/05/13 16:27:33 by rodrpere         ###   ########.fr       */
+/*   Updated: 2026/05/14 09:47:08 by rodrpere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int argc, char **argv)
 {
 	if (argc == 1)
 		return(printf("File name is missing.\n"), 0);
-	if (argv > 2)
+	else if (argc > 2)
 		return (printf ("Too many arguments"), 0);
 	else
 		return (readf(argv[1]));
