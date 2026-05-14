@@ -1,6 +1,6 @@
 NAME=GNL.a
 CC=cc
-CFLAGS= -Wall -Wextra -Werror -D BUFFER_SIZE=42
+CFLAGS= -Wall -Wextra -Werror -g -D BUFFER_SIZE=42
 SRCS= $(wildcard *.c)
 OBJS= $(SRCS:.c=.o)
 

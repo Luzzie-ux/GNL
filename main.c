@@ -6,7 +6,7 @@
 /*   By: rodrpere <rodrpere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 16:12:45 by rodrpere          #+#    #+#             */
-/*   Updated: 2026/05/14 09:47:08 by rodrpere         ###   ########.fr       */
+/*   Updated: 2026/05/14 12:15:42 by rodrpere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-static int	readf(char *argv)
+static int	read_file(char *argv)
 {
 	int		file;
 	char	*buffer;
 
-	file = open(argv[1], O_RDONLY);
+	file = open(argv, O_RDONLY);
 	if (file == -1)
 		return (printf("Cannot read file"), 0);
 	buffer = get_next_line(file);
@@ -40,6 +40,6 @@ int	main(int argc, char **argv)
 	else if (argc > 2)
 		return (printf ("Too many arguments"), 0);
 	else
-		return (readf(argv[1]));
+		return (read_file(argv[1]));
 	return (0);
 }
