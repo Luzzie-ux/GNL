@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rodrpere <rodrpere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/13 15:19:06 by rodrpere          #+#    #+#             */
-/*   Updated: 2026/05/14 16:55:54 by rodrpere         ###   ########.fr       */
+/*   Created: 2026/05/14 15:37:44 by rodrpere          #+#    #+#             */
+/*   Updated: 2026/05/14 17:26:41 by rodrpere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,31 @@
 
 char	*get_next_line(int fd)
 {
-	int		bytes;
-	char 	*buffer;
-	char	*line;
+	int			bytes;
+	char 		*buffer;
+	char		*line;
+	static char	*stash;
 	
 	bytes = 0;
 	if (fd < 0 || BUFFER_SIZE < 0)
 		return (NULL);
-	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	buffer = (char *)malloc((BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
 	bytes = read(fd, buffer, BUFFER_SIZE);
 	buffer[bytes] = '\0';
-	if (bytes < 0)
-		return (NULL);
-	else if (bytes == 0)
-		return (buffer);
-	else
-		line = ft_dupp(buffer);
-	join(line, buffer);
-	return (free(line), line);
+	while(*buffer)
+	{
+		stash = buffer;
+		if (*buffer == '\n')
+			return (stash);
+		buffer++;
+	}
+	return (stash);
+}
+
+void walker(char *buffer)
+{
+	char *stash;
+	
 }

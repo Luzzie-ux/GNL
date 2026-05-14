@@ -6,7 +6,7 @@
 /*   By: rodrpere <rodrpere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 12:46:36 by rodrpere          #+#    #+#             */
-/*   Updated: 2026/05/13 16:43:49 by rodrpere         ###   ########.fr       */
+/*   Updated: 2026/05/14 16:57:17 by rodrpere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 //prototipos
 
 char	*get_next_line(int fd);
+
+/* char	*ft_dupp(const char *s);
+int	compear(char *s1, char *s2);
+char *splitn(char *s);
+int	findn(char *str); */
+
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42

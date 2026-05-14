@@ -6,7 +6,7 @@
 /*   By: rodrpere <rodrpere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 13:58:31 by rodrpere          #+#    #+#             */
-/*   Updated: 2026/05/14 15:23:20 by rodrpere         ###   ########.fr       */
+/*   Updated: 2026/05/14 16:55:50 by rodrpere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	compear(char *s1, char *s2)
 {
 	size_t	i;
 	size_t	n;
-	char	*s1;
+
 	i = 0;
 	n = findn(s1);
 	while (i < n && s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
@@ -62,14 +62,12 @@ int	compear(char *s1, char *s2)
 char	*join(char *line, char *buffer)
 {
 	char	*nl;
-	char	*
 	
 	nl = splitn(line);
 	compear(nl, buffer);
-	
 }
 
-char	*dup(const char *s)
+char	*ft_dupp(const char *s)
 {
 	char	*str;
 	char	*p;
@@ -78,7 +76,7 @@ char	*dup(const char *s)
 	len = 0;
 	while (s[len])
 		len++;
-	str = malloc(len + 2);
+	str = malloc(len + 1);
 	if (!str)
 		return (NULL);
 	p = str;
