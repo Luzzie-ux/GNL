@@ -6,7 +6,7 @@
 /*   By: rodrpere <rodrpere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 15:19:06 by rodrpere          #+#    #+#             */
-/*   Updated: 2026/05/13 16:50:03 by rodrpere         ###   ########.fr       */
+/*   Updated: 2026/05/14 11:52:50 by rodrpere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,59 @@
 
 char	*get_next_line(int fd)
 {
-	int		i;
+	int		bytes;
 	char 	*buffer;
+	char	*phrase;
 
-	i = 0;
+	bytes = 0;
 	if (fd < 0 || BUFFER_SIZE < 0)
 		return (NULL);
-	buffer = (char *)malloc(BUFFER_SIZE+1 * sizeof(char *));
+	buffer = (char *)malloc(BUFFER_SIZE + 1 * sizeof(char *));
 	if (!buffer)
 		return (NULL);
 	while (buffer)
 	{
-		i = read(fd, buffer, BUFFER_SIZE);
-		if (!i)
-			return (NULL);			
+		bytes = read(fd, buffer, BUFFER_SIZE);
+		if (!bytes)
+			return (NULL);
+		else if (bytes == 0)
+			return (buffer);
+		else
+			phrase = ft_strdup(buffer);
+		// phrase[findn(phrase) + 1] = '\0';
+		return (phrase);
+		buffer++;
 	}
 	return (NULL);
+}
+
+/* int	findn(char *s)
+{
+	int i;
+
+ 	i = 0;
+	if (!s)
+		return (0);
+	while (s[i] != '\n')
+		i++;
+	return (i);
+} */
+
+char	*ft_strdup(const char *s)
+{
+	char	*str;
+	char	*p;
+	long	len;
+
+	len = 0;
+	while (s[len])
+		len++;
+	str = malloc(len + 2);
+	if (!str)
+		return (NULL);
+	p = str;
+	while (*s)
+		*p++ = *s++;
+	*p = '\n';
+	return (str);
 }
