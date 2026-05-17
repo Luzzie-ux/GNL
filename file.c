@@ -6,7 +6,7 @@
 /*   By: rodrpere <rodrpere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 15:37:44 by rodrpere          #+#    #+#             */
-/*   Updated: 2026/05/15 20:56:11 by rodrpere         ###   ########.fr       */
+/*   Updated: 2026/05/15 21:10:47 by rodrpere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*get_next_line(int fd)
 		if (!stash)
 			return (NULL);
 	}
-	stash = read_line(fd, stash)
+	stash = read_line(fd, stash);
 	if (!stash)
 		return (NULL);
 	return (stash);
