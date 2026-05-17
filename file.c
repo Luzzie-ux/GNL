@@ -6,7 +6,7 @@
 /*   By: rodrpere <rodrpere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 15:37:44 by rodrpere          #+#    #+#             */
-/*   Updated: 2026/05/15 21:10:47 by rodrpere         ###   ########.fr       */
+/*   Updated: 2026/05/17 19:53:58 by rodrpere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*get_next_line(int fd)
 {
 	static char		*stash;
-	char			*line;
+	// char			*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
@@ -27,7 +27,8 @@ char	*get_next_line(int fd)
 	}
 	stash = read_line(fd, stash);
 	if (!stash)
-		return (NULL);
+		return (free(stash), stash = NULL, NULL);
+	// line = relm(stash);
 	return (stash);
 }
 
@@ -53,3 +54,11 @@ char	*read_line(int fd, char *stash)
 	}
 	return (free(buffer), stash);
 }
+
+// char	*relm(char *stash)
+// {
+// 	char	*new_line;
+// 	char	*new_stash;
+// 	new_line = ft_strchr(stash, '\n');
+// 	return (new_line);
+// }

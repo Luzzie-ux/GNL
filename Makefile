@@ -1,7 +1,7 @@
 NAME=GNL.a
 CC=cc
-CFLAGS= -Wall -Wextra -Werror -g -D BUFFER_SIZE=42
-SRCS= $(wildcard *.c)
+CFLAGS= -Wall -Wextra -Werror -D BUFFER_SIZE=42
+SRCS= file.c utils.c \
 OBJS= $(SRCS:.c=.o)
 
 all: $(NAME)
