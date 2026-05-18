@@ -5,69 +5,26 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rodrpere <rodrpere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/14 13:58:31 by rodrpere          #+#    #+#             */
-/*   Updated: 2026/05/14 16:55:50 by rodrpere         ###   ########.fr       */
+/*   Created: 2026/05/15 14:08:44 by rodrpere          #+#    #+#             */
+/*   Updated: 2026/05/18 16:43:12 by rodrpere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	findn(char *str)
+size_t	ft_strlen(const char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(str[i])
-	{
-		if (str[i] == '\n')
-			return (i);
+	if (!s)
+		return (0);
+	while (s[i])
 		i++;
-	}
 	return (i);
 }
 
-char *splitn(char *s)
-{
-	char *nl;
-	int	i;
-
-	if (!s)
-		return (NULL);
-	i = findn(s);
-	while (s[i])
-	{
-		*nl = s[i];	
-		i++;
-		nl++;
-	}
-	return (nl);
-}
-
-int	compear(char *s1, char *s2)
-{
-	size_t	i;
-	size_t	n;
-
-	i = 0;
-	n = findn(s1);
-	while (i < n && s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
-	{
-		i++;
-	}
-	if (i == n)
-		return (0);
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
-
-char	*join(char *line, char *buffer)
-{
-	char	*nl;
-	
-	nl = splitn(line);
-	compear(nl, buffer);
-}
-
-char	*ft_dupp(const char *s)
+char	*ft_strdup(const char *s)
 {
 	char	*str;
 	char	*p;
@@ -81,7 +38,65 @@ char	*ft_dupp(const char *s)
 		return (NULL);
 	p = str;
 	while (*s)
-		*p++ = *s++; 
-	*p = '\0'; 
-	return (str); 
+		*p++ = *s++;
+	*p = '\0';
+	return (str);
+}
+
+char	*ft_strjoin(char *s1, char const *s2)
+{
+	char	*snew;
+	char	*start;
+	int		total;
+	char	*save;
+
+	if (!s1 || !s2)
+		return (free(s1), NULL);
+	total = ft_strlen(s1) + ft_strlen(s2);
+	snew = malloc (total + 1);
+	if (!snew)
+		return (free(s1), NULL);
+	start = snew;
+	save = s1;
+	while (*s1)
+		*start++ = *s1++;
+	while (*s2)
+		*start++ = *s2++;
+	*start = 0;
+	return (free(save), snew);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	while (*s)
+	{
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
+	}
+	if ((char)c == '\0')
+		return ((char *)s);
+	return (NULL);
+}
+
+char	*ft_substr(char *s, unsigned int start, size_t len)
+{
+	char	*sub;
+	size_t		i;
+
+	i = 0;
+	if (!s)
+		return (NULL);
+	else if (start >= ft_strlen(s))
+		return (ft_strdup(""));
+	if (len > ft_strlen(s) - start)
+		len = ft_strlen(s) - start;
+	sub = (char *)malloc(len + 1);
+	if (!sub)
+		return (NULL);
+	s += start;
+	while (i < len)
+		sub[i++] = *s++;
+	sub[i] = 0;
+	return (sub);
 }
