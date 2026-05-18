@@ -6,7 +6,7 @@
 /*   By: rodrpere <rodrpere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 15:19:06 by rodrpere          #+#    #+#             */
-/*   Updated: 2026/05/18 16:33:50 by rodrpere         ###   ########.fr       */
+/*   Updated: 2026/05/18 17:17:35 by rodrpere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*get_next_line(int fd)
 	static char		*stash;
 	char			*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0) //verificar a necessidade disto
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (!stash)
 	{
@@ -27,23 +27,26 @@ char	*get_next_line(int fd)
 	}
 	stash = read_line(fd, stash);
 	if (!stash || !*stash)
-		return (stash = NULL, NULL);
- 	line = next_line(stash);
+		return (free(stash), stash = NULL, NULL);
+	line = next_line(stash);
 	stash = clean_stash(stash);
 	if (!stash || !*stash)
+	{
+		free(stash);
 		stash = NULL;
+	}
 	return (line);
 }
 
 char	*read_line(int fd, char *stash)
 {
 	int				bytes;
-	char 			*buffer;
+	char			*buffer;
 
 	buffer = (char *)malloc((BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
-	while(!ft_strchr(stash, '\n'))
+	while (!ft_strchr(stash, '\n'))
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
 		if (bytes == -1)

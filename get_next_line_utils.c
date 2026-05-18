@@ -6,7 +6,7 @@
 /*   By: rodrpere <rodrpere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 14:08:44 by rodrpere          #+#    #+#             */
-/*   Updated: 2026/05/18 16:43:12 by rodrpere         ###   ########.fr       */
+/*   Updated: 2026/05/18 17:16:13 by rodrpere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ char	*ft_strjoin(char *s1, char const *s2)
 
 char	*ft_strchr(const char *s, int c)
 {
+	if (!s)
+		return (NULL);
 	while (*s)
 	{
 		if (*s == (char)c)
@@ -81,7 +83,7 @@ char	*ft_strchr(const char *s, int c)
 
 char	*ft_substr(char *s, unsigned int start, size_t len)
 {
-	char	*sub;
+	char		*sub;
 	size_t		i;
 
 	i = 0;
