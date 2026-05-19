@@ -6,7 +6,7 @@
 /*   By: rodrpere <rodrpere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 12:46:36 by rodrpere          #+#    #+#             */
-/*   Updated: 2026/05/18 16:23:39 by rodrpere         ###   ########.fr       */
+/*   Updated: 2026/05/19 18:45:22 by rodrpere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,19 @@
 
 //prototipos
 size_t	ft_strlen(const char *s);
-
+int		ft_find_n(char *s);
+char	*fill_buffer(int fd, char *stash);
 char	*get_next_line(int fd);
 char	*next_line(char *stash);
 char	*ft_strdup(const char *s);
 char	*clean_stash(char *stash);
-char	*read_line(int fd, char *stash);
-char	*ft_strchr(const char *s, int c);
-char	*ft_strjoin(char *s1, char const *s2);
-char	*ft_substr(char *s, unsigned int start, size_t len);
+char	*extract_until_newline(char *stash);
+char	*trim_stash(char *stash);
+char	*ft_strjoin(char *s1, char *s2);
+void	*ft_memcpy(void *dest, const void *src, size_t n);
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 100
 # endif
 
 #endif
