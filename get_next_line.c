@@ -6,7 +6,7 @@
 /*   By: rodrpere <rodrpere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 15:19:06 by rodrpere          #+#    #+#             */
-/*   Updated: 2026/05/19 19:04:38 by rodrpere         ###   ########.fr       */
+/*   Updated: 2026/05/19 19:07:53 by rodrpere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*get_next_line(int fd)
 {
 	char		*line;
 	static char	*stash;
-	
+
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	stash = fill_buffer(fd, stash);
@@ -46,7 +46,7 @@ char	*fill_buffer(int fd, char *stash)
 {
 	char		*buffer;
 	ssize_t		bytes;
-	
+
 	buffer = (char *)malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
@@ -65,7 +65,7 @@ char	*fill_buffer(int fd, char *stash)
 	return (free(buffer), stash);
 }
 
-char	*extract_until_newline(char *stash) 
+char	*extract_until_newline(char *stash)
 {
 	int		i;
 	int		j;
@@ -82,7 +82,7 @@ char	*extract_until_newline(char *stash)
 	line = malloc(i + 1);
 	if (!line)
 		return (free(stash), NULL);
-	while(j < i)
+	while (j < i)
 	{
 		line[j] = stash[j];
 		j++;
@@ -111,7 +111,7 @@ char	*trim_stash(char *stash)
 	if (!rest_of_line)
 		return (free(stash), NULL);
 	while (i != j)
-			rest_of_line[l++] = stash[i++];
+		rest_of_line[l++] = stash[i++];
 	rest_of_line[l] = 0;
 	return (free(stash), rest_of_line);
 }
