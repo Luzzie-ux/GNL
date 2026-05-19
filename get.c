@@ -6,7 +6,7 @@
 /*   By: rodrpere <rodrpere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/19 12:07:32 by rodrpere          #+#    #+#             */
-/*   Updated: 2026/05/19 18:47:00 by rodrpere         ###   ########.fr       */
+/*   Updated: 2026/05/19 18:58:08 by rodrpere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,12 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	stash = fill_buffer(fd, stash);
-	line = extract_until_newline(stash);
-	stash = trim_stash(stash);
 	if (!stash || !*stash)
 		return (free(stash), stash = NULL, NULL);
+	line = extract_until_newline(stash);
+	stash = trim_stash(stash);
+	if (!stash)
+		stash = NULL;
 	return (line);
 }
 
