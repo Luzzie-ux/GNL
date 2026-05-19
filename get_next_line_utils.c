@@ -6,7 +6,7 @@
 /*   By: rodrpere <rodrpere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 14:08:44 by rodrpere          #+#    #+#             */
-/*   Updated: 2026/05/19 16:01:58 by rodrpere         ###   ########.fr       */
+/*   Updated: 2026/05/19 19:05:01 by rodrpere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ char	*ft_strdup(const char *s)
 	char	*p;
 	long	len;
 
-	len = 0;
-	while (s[len])
-		len++;
+	len = ft_strlen(s);
 	str = malloc(len + 1);
 	if (!str)
 		return (NULL);
@@ -43,62 +41,46 @@ char	*ft_strdup(const char *s)
 	return (str);
 }
 
-char	*ft_strjoin(char *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	char	*snew;
-	char	*start;
-	int		total;
-	char	*save;
+	char		*new_string;
+	size_t		total;
+	size_t		len1;
+	size_t		len2;
 
-	if (!s1 || !s2)
-		return (free(s1), NULL);
-	total = ft_strlen(s1) + ft_strlen(s2);
-	snew = malloc (total + 1);
-	if (!snew)
-		return (free(s1), NULL);
-	start = snew;
-	save = s1;
-	while (*s1)
-		*start++ = *s1++;
-	while (*s2)
-		*start++ = *s2++;
-	*start = 0;
-	return (free(save), snew);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	if (!s)
-		return (NULL);
-	while (*s)
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	if (!s1)
 	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
+		s1 = ft_strdup("");
+		if (!s1)
+			return (NULL);
 	}
-	if ((char)c == '\0')
-		return ((char *)s);
-	return (NULL);
+	total = len1 + len2;
+	new_string = malloc(total + 1);
+	if (!new_string)
+		return (free(s1), NULL);
+	ft_memcpy(new_string, s1, len1);
+	ft_memcpy(new_string + len1, s2, len2);
+	new_string[len1 + len2] = 0;
+	return (free(s1), new_string);
 }
 
-char	*ft_substr(char *s, unsigned int start, size_t len)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	char		*sub;
-	size_t		i;
+	unsigned const char	*ps;
+	unsigned char		*pd;
 
-	i = 0;
-	if (!s)
+	ps = (unsigned const char *)src;
+	pd = (unsigned char *)dest;
+	if (!dest && !src)
 		return (NULL);
-	else if (start >= ft_strlen(s))
-		return (ft_strdup(""));
-	if (len > ft_strlen(s) - start)
-		len = ft_strlen(s) - start;
-	sub = (char *)malloc(len + 1);
-	if (!sub)
-		return (NULL);
-	s += start;
-	while (i < len)
-		sub[i++] = *s++;
-	sub[i] = 0;
-	return (sub);
+	while (n > 0)
+	{
+		*pd = *ps;
+		pd++;
+		ps++;
+		n--;
+	}
+	return (dest);
 }
