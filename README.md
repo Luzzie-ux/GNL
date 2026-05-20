@@ -6,6 +6,8 @@ This project revolves around the reading of files and saving which line was foun
 Walking progressevily towards the EOF(end of file), and returning one by one every \n we find.  
 The fuction get_next_line then, is the perfect way of acheiving such requisits for our project.  
 
+To check for instructions to go [Instructions](#instructions) 
+
 # Instructions
 
 ```bash
@@ -187,4 +189,4 @@ I believe that the way get_next_line was presented to me in the subject "your ge
 
 # Resources
 
-In the making of this project, the resources used to do it were the GNU Degubber (GDB) and Claude Ai from Anthropic to debug the code. Valgrind to check for memory leaks and errors. And the help of my peers to better understand what I was doing.
+In the making of this project, the resources used to do it were the GNU Degubber (GDB) and Claude Ai from Anthropic to debug the code. Valgrind to check for memory leaks and errors. Francinette made by [Xicodomingues](https://github.com/xicodomingues/francinette) to test every possible output. And the help of my peers to better understand what I was doing.
