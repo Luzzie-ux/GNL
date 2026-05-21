@@ -8,7 +8,8 @@
 4. [Algorithm used](#algorithm-used)
 	1. [What was implemented?](#what-was-implemented)
 	2. [Why this way?](#why-this-way)
-5. [Conclusion](#conclusion)
+5. [Bonus](#bonus)
+6. [Conclusion](#conclusion)
 
 
 # Description
@@ -207,8 +208,35 @@ BUFFER_SIZE being a compile-time flag is intentional: a smaller value means more
 
 Finally, ft_strjoin freeing s1 is a deliberate choice to avoid memory leaks — since stash is constantly being rebuilt by joining old content with new buffer data, the old pointer must be freed each time or memory accumulates with every read cycle.  
 
+
+# Bonus
+
+For this project, the bonus part isnt that much complex, only asking us two thing, that we only call for 1 static variable and that our fuctions can handle multiple file descriptors at the same time.
+
+```c
+//gnl_bonus
+char	*get_next_line(int fd)
+{
+	char		*line;
+	static char	*stash[1024];
+
+	if ((fd < 0 || fd >= 1024) || BUFFER_SIZE <= 0)
+		return (NULL);
+	stash[fd] = fill_buffer(fd, stash[fd]);
+	if (!stash[fd] || !*stash[fd])
+		return (free(stash[fd]), stash[fd] = NULL, NULL);
+	line = extract_until_newline(stash[fd]);
+	stash[fd] = trim_stash(stash[fd]);
+	if (!stash[fd])
+		stash[fd] = NULL;
+	return (line);
+}
+```
+
+By changing this part of the function to support the fd given by our main up until 1024, we make a limit of how many can be used. And by passing it to the rest of the helpers, we can do what the subject asks of us "This means you should be able to call get_next_line() to read from fd 3, then fd 4, then fd 5, then again from fd 3, then fd 4, and so forth, without losing track of the reading state for each file descriptor."
+
 # Conclusion
 
-get_next_line is a deceptively simple function — on the surface it just reads a line, but getting it right requires careful thinking about memory management, buffer boundaries, and state persistence across calls. The static stash is what ties it all together, solving the core problem of read overshooting newlines without leaking memory or losing data.  
+The get_next_line is a deceptively simple function — on the surface it just reads a line, but getting it right requires careful thinking about memory management, buffer boundaries, and state persistence across calls. The static stash is what ties it all together, solving the core problem of read overshooting newlines without leaking memory or losing data.  
 
 Beyond the function itself, this project was a valuable exercise in understanding how low-level I/O works in C, and why seemingly small decisions — like when to free a pointer or how large a buffer should be — have real consequences. It also reinforced the importance of testing edge cases: empty files, files with no trailing \n, and very large or very small buffer sizes all behave differently and need to be handled explicitly.  
