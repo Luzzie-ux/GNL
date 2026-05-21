@@ -1,12 +1,25 @@
 *This project has been created as part of the 42 curriculum by rodrpere*
 
+# Table of contents
+
+1. [Description](#description)
+2. [Resources](#resources)
+3. [Instructions](#instructions)
+4. [Algorithm used](#algorithm-used)
+	1. [What was implemented?](#what-was-implemented)
+	2. [Why this way?](#why-this-way)
+5. [Conclusion](#conclusion)
+
+
 # Description
 
-This project revolves around the reading of files and saving which line was found within it.   
-Walking progressevily towards the EOF(end of file), and returning one by one every \n we find.  
-The fuction get_next_line then, is the perfect way of acheiving such requisits for our project.  
+This C project revolves around reading line by line from a given file descriptor.  
+It walks progressively towards the EOF (end of file), returning each line one by one as \n characters are found.  
+The fuction get_next_line then, is the perfect way of achieving such requisits for our project.  
 
-To check for instructions to go [Instructions](#instructions) 
+# Resources
+
+In the making of this project, the resources used to do it were the GNU Debugger (GDB) and Claude Ai from Anthropic as debugging assistence and spelling mistakes. Valgrind to check for memory leaks and errors. Francinette made by [Xicodomingues](https://github.com/xicodomingues/francinette) to test every possible output. And the help of my peers to better understand what I was doing.
 
 # Instructions
 
@@ -14,13 +27,15 @@ To check for instructions to go [Instructions](#instructions)
 
 #To compile this project all you need to do this
 
-cc -Wall -Wextra -Werror -D BUFFER_SIZE=n get_next_line.c get_next_line_utils.c your_main.c 
+cc -Wall -Wextra -Werror -D BUFFER_SIZE=n get_next_line.c get_next_line_utils.c your_main.c
 
-#the n for buffer_size indicates the amount of bytes the read function will read from fhe file descriptor given
+#the n for buffer_size indicates the amount of bytes the read function will read from the file descriptor given
  
 ```
 
-# What was implemented?
+# Algorithm used
+
+## What was implemented?
 
 To understand what was done here, we need first to dive into what the read function does and what the get_next_line itself will do.
 
@@ -29,15 +44,15 @@ To understand what was done here, we need first to dive into what the read funct
 ssize_t read(int fd, void *buf, size_t nbytes);
 ```
 
-The read function will receive from the main a integer called file descriptor (int fd), that represents the file we are trying to read, beyond that it all comes to what the read function will do, depending on how many nbytes we give it, that is how many bytes the function will read from the file, the standard chosen by me was BUFFER_SIZE 42 (which can be found in the .h file with the same name as the project), but it doesnt matter the number of bytes chosen, as long as it is bigger than zero. Then whatever is read by the function will now be passed to our void *buf, storing up to nbytes of anything.
+The read function will receive from the main a integer called file descriptor (int fd), that represents the file we are trying to read, beyond that it all comes to what the read function will do, depending on how many nbytes we give it, that is how many bytes the function will read from the file, the standard chosen by me was BUFFER_SIZE 42 (which can be found in the .h file with the same name as the project), but it doesn't matter the number of bytes chosen, as long as it is bigger than zero. Then whatever is read by the function will now be passed to our void *buf, storing up to nbytes of anything.
 
 The function itself has three return values:
 
-	one -> where nbytes > 0 (which means the read function worked).
+	A Positive one -> where nbytes > 0 (which means the read function worked).
 
-	two -> where nbytes = 0 (which means the read function has reached EOF).
+	A Neutral one -> where nbytes = 0 (which means the read function has reached EOF).
 
-	three -> where nbytes < 0 (which means the read function stopped reading).
+	A Negative one -> where nbytes < 0 (which means the read function stopped reading).
 
 with these values the get_next_line can do 50% of what we want it to do.
 
@@ -46,11 +61,13 @@ with these values the get_next_line can do 50% of what we want it to do.
 char	*get_next_line(int fd);
 ```
 
-This function by itself cant do anything, but what it basically does is. It reads from the file given to a buffer, from that buffer we pass whatever it has stored to a static char* called stash, and from here we do two things: 
+This function doesnt work alone, but what it essentily does is: 
 
-First we will extract chars until we find a new_line and then return that as a variable called char *line.  
+It reads from the file given to a buffer, from that buffer we pass whatever it has stored to a static char* called stash, and from here we do two things.   
 
-And then secondly with stash still having the original line, we will read from the \n found until the \0 at the end of the line, passing that to stash again and repeating the loop until we reach EOF.  
+	First we will extract chars until we find a new_line and then return that as a variable called char *line.  
+
+	Then, with stash still having the original line, we trim everything up to and including the \n, saving the remainder back into stash, repeating the loop until we reach EOF.  
 
 With its process explained, lets see what makes it possible to do all that
 	
@@ -59,8 +76,8 @@ In our get_next_line.h file we have these prototypes handling most of the work t
 	int		ft_find_n(char *s); --> will search for a \n and if it does it return 1 for true 0 for false
 	char	*get_next_line(int fd); --> will call the other functions
 	char	*trim_stash(char *stash); --> will take the rest of the line after the first \n and return it
-	size_t	ft_strlen(const char *s); --> will count the lenght of the string given
-	char	*ft_strdup(const char *s); --> will duplicate the string given and return a mallocated copy 
+	size_t	ft_strlen(const char *s); --> will count the length of the string given
+	char	*ft_strdup(const char *s); --> will duplicate the string given and return a malloc'd copy 
 	char	*ft_strjoin(char *s1, char *s2); --> will join buffer to stash when no \n is found
 	char	*fill_buffer(int fd, char *stash); --> will call the read function and fill buffer
 	char	*extract_until_newline(char *stash); --> will extract from the string given a line until \n is found
@@ -182,11 +199,16 @@ char	*trim_stash(char *stash)
 	return (free(stash), rest_of_line);
 }
 ```
+## Why this way?
 
-# Why this way?
+The core challenge of get_next_line is that read doesn't stop at \n — it reads as many bytes as BUFFER_SIZE tells it to, meaning a single read can overshoot a newline and pull in characters that belong to the next line. This is why a static char *stash is necessary: it persists between calls, holding any leftover content beyond the first \n so nothing is lost. On the next call, get_next_line checks the stash before even calling read again — if a full line is already there, no read is needed at all.  
 
-I believe that the way get_next_line was presented to me in the subject "your get_next_line() function should let you read the text file pointed to by the file descriptor, one line at a time. (...) Your function should return the line that was read. If there is nothing left to read or if an error occurs, it should return NULL. Please note that the returned line should include the terminating \n character, except when the end of the file is reached and the file does not end with a \n character." was what made me choose to do it this way, with a simple mental loop where I save whatever was read from the file into a stash, then from this stash we co through the string until we find a \n, return that and from the original string we go through it and return whatever is after the first \n until the null character and repeat until EOF.
+BUFFER_SIZE being a compile-time flag is intentional: a smaller value means more read calls but less memory usage, while a larger value does the opposite. Neither is universally better, so leaving it configurable makes the function more flexible.  
 
-# Resources
+Finally, ft_strjoin freeing s1 is a deliberate choice to avoid memory leaks — since stash is constantly being rebuilt by joining old content with new buffer data, the old pointer must be freed each time or memory accumulates with every read cycle.  
 
-In the making of this project, the resources used to do it were the GNU Degubber (GDB) and Claude Ai from Anthropic to debug the code. Valgrind to check for memory leaks and errors. Francinette made by [Xicodomingues](https://github.com/xicodomingues/francinette) to test every possible output. And the help of my peers to better understand what I was doing.
+# Conclusion
+
+get_next_line is a deceptively simple function — on the surface it just reads a line, but getting it right requires careful thinking about memory management, buffer boundaries, and state persistence across calls. The static stash is what ties it all together, solving the core problem of read overshooting newlines without leaking memory or losing data.  
+
+Beyond the function itself, this project was a valuable exercise in understanding how low-level I/O works in C, and why seemingly small decisions — like when to free a pointer or how large a buffer should be — have real consequences. It also reinforced the importance of testing edge cases: empty files, files with no trailing \n, and very large or very small buffer sizes all behave differently and need to be handled explicitly.  
