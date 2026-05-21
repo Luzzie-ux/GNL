@@ -6,7 +6,7 @@
 /*   By: rodrpere <rodrpere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 14:15:08 by rodrpere          #+#    #+#             */
-/*   Updated: 2026/05/21 14:16:41 by rodrpere         ###   ########.fr       */
+/*   Updated: 2026/05/21 14:18:48 by rodrpere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 //prototipos
 size_t	ft_strlen(const char *s);
 int		ft_find_n(char *s);
-char	*fill_buffer(int fd, char *stash[fd]);
+char	*fill_buffer(int fd, char *stash);
 char	*get_next_line(int fd);
 char	*ft_strdup(const char *s);
 char	*extract_until_newline(char *stash);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bonus.c                                            :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rodrpere <rodrpere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 15:19:06 by rodrpere          #+#    #+#             */
-/*   Updated: 2026/05/21 14:15:53 by rodrpere         ###   ########.fr       */
+/*   Updated: 2026/05/21 14:18:41 by rodrpere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-char	*fill_buffer(int fd, char *stash[fd])
+char	*fill_buffer(int fd, char *stash)
 {
 	char		*buffer;
 	ssize_t		bytes;
@@ -50,19 +50,19 @@ char	*fill_buffer(int fd, char *stash[fd])
 	buffer = (char *)malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
-	while (!ft_find_n(stash[fd]))
+	while (!ft_find_n(stash))
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
 		if (bytes < 0)
-			return (free(buffer), free(stash[fd]), stash[fd] = NULL, NULL);
+			return (free(buffer), free(stash), stash = NULL, NULL);
 		if (bytes == 0)
 			break ;
 		buffer[bytes] = 0;
-		stash[fd] = ft_strjoin(stash[fd], buffer);
-		if (!stash[fd] || !*stash[fd])
+		stash = ft_strjoin(stash, buffer);
+		if (!stash || !*stash)
 			return (free(buffer), NULL);
 	}
-	return (free(buffer), stash[fd]);
+	return (free(buffer), stash);
 }
 
 char	*extract_until_newline(char *stash)
